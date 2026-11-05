@@ -1,3 +1,4 @@
+const { matchedData } = require("express-validator");
 const peliculasService = require("../services/pelicula.service.js");
 const resenasService = require("../services/resena.service.js");
 
@@ -33,6 +34,17 @@ async function listar(req, res) {
 async function top(req, res) {
     const peliculas = await peliculasService.mejores(3);
     res.json(peliculas.map(p => p.resumen()));
+}
+
+// GET /peliculas/estadisticas
+async function estadisticas(req, res) {
+    const { minimo = 1 } = matchedData(req, { locations: ["query"] });
+    const datos = await peliculasService.estadisticasPorGenero(minimo);
+    res.json(datos.map(d => ({
+        genero: d._id,
+        total: d.total,
+        notaMedia: d.notaMedia == null ? null : Math.round(d.notaMedia * 100) / 100
+    })));
 }
 
 async function obtener(req, res) {
@@ -85,4 +97,4 @@ async function crearResena(req, res){
 
 }
 
-module.exports = { listar, top, obtener, resenas, crear, actualizar, eliminar, crearResena };
+module.exports = { listar, top, estadisticas, obtener, resenas, crear, actualizar, eliminar, crearResena };

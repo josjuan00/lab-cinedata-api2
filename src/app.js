@@ -11,8 +11,8 @@ const cors = require("cors");
 
 const app = express();
 
-const origenesPermitidos = process.env.CORS_ORIGIN.split(",");
-app.use(cors({cors: origenesPermitidos}));
+const origenesPermitidos = process.env.CORS_ORIGIN.split(",").map(o => o.trim());
+app.use(cors({ origin: origenesPermitidos }));
 
 app.use(express.json());
 app.use(logger);

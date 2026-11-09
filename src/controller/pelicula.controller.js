@@ -79,7 +79,7 @@ async function crear(req, res) {
 async function actualizar(req, res) {
     const pelicula = await peliculasService.actualizar(req.params.id, matchedData(req, { locations: ["body"] }));
     if (!pelicula) {
-        return res.status(404).json({error: "PElicula not found"});
+        return res.status(404).json({error: "Pelicula no encontrada"});
     }
     res.json(pelicula);
 }
@@ -89,7 +89,7 @@ async function actualizar(req, res) {
 async function eliminar(req, res) {
     const pelicula = await peliculasService.eliminar(req.params.id);
     if (!pelicula) {
-        return res.status(404).json({error: "PElicula not found"});
+        return res.status(404).json({error: "Pelicula no encontrada"});
     }
     res.status(204).end();
 }

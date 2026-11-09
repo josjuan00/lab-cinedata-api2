@@ -3,3 +3,5 @@ node_modules
 demo-modulos
 .claude/settings.local.json
 coverage
+*.code-workspace
+.claude/skills/telegrafes

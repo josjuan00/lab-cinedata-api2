@@ -41,5 +41,3 @@ Leer o modificar .env.
 Meter consultas a la BD en el controlador.
 Instalar dependencias nuevas sin decirlo.
 Hacer commit, push, abrir PR o merge sin que se pida.
-Pendiente (borrar al arreglarlo)
-cors({cors: ...}) usa una opción que no existe: en la práctica CORS acepta cualquier origen.

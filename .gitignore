@@ -2,3 +2,4 @@
 node_modules
 demo-modulos
 .claude/settings.local.json
+coverage

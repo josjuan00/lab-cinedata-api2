@@ -36,6 +36,12 @@ async function top(req, res) {
     res.json(peliculas.map(p => p.resumen()));
 }
 
+// GET /peliculas/recientes
+async function recientes(req, res) {
+    const peliculas = await peliculasService.recientes(10);
+    res.json(peliculas.map(p => p.resumen()));
+}
+
 // GET /peliculas/estadisticas
 async function estadisticas(req, res) {
     const { minimo = 1 } = matchedData(req, { locations: ["query"] });
@@ -45,6 +51,13 @@ async function estadisticas(req, res) {
         total: d.total,
         notaMedia: d.notaMedia == null ? null : Math.round(d.notaMedia * 100) / 100
     })));
+}
+
+// GET /peliculas/buscar?q=texto
+async function buscar(req, res) {
+    const { q, orden, dir, page } = matchedData(req, { locations: ["query"] });
+    const peliculas = await peliculasService.buscarPorTitulo(q, { orden, dir, pagina: page });
+    res.json(peliculas.map(p => p.resumen()));
 }
 
 async function obtener(req, res) {
@@ -57,14 +70,14 @@ async function obtener(req, res) {
 
 // POST/ peliculas
 async function crear(req, res) {
-    const pelicula = await peliculasService.crear(req.body);
+    const pelicula = await peliculasService.crear(matchedData(req, { locations: ["body"] }));
     res.status(201).json(pelicula);
 } 
 
 // PUT /peliculas/:id
 
 async function actualizar(req, res) {
-    const pelicula = await peliculasService.actualizar(req.params.id, req.body);
+    const pelicula = await peliculasService.actualizar(req.params.id, matchedData(req, { locations: ["body"] }));
     if (!pelicula) {
         return res.status(404).json({error: "PElicula not found"});
     }
@@ -97,4 +110,4 @@ async function crearResena(req, res){
 
 }
 
-module.exports = { listar, top, estadisticas, obtener, resenas, crear, actualizar, eliminar, crearResena };
+module.exports = { listar, top, recientes, estadisticas, buscar, obtener, resenas, crear, actualizar, eliminar, crearResena };

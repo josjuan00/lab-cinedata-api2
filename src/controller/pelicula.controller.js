@@ -38,7 +38,8 @@ async function top(req, res) {
 
 // GET /peliculas/recientes
 async function recientes(req, res) {
-    const peliculas = await peliculasService.recientes(10);
+    const { limite = 5 } = matchedData(req, { locations: ["query"] });
+    const peliculas = await peliculasService.recientes(limite);
     res.json(peliculas.map(p => p.resumen()));
 }
 

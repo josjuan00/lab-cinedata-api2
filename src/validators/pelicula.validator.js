@@ -8,6 +8,15 @@ const validarEstadisticas = [
         .toInt()
 ];
 
+const validarRecientes = [
+    query("limite")
+        .optional()
+        .not().isArray().withMessage("limite debe ser un único valor").bail()
+        .isInt({ min: 1, max: 5 })
+        .withMessage("limite debe ser un entero entre 1 y 5")
+        .toInt()
+];
+
 const validarBusqueda = [
     query("q")
         .exists().withMessage("q es obligatorio").bail()
@@ -101,4 +110,4 @@ function validar(req, res, next) {
     next();
 }
 
-module.exports = { validarEstadisticas, validarBusqueda, validarCrear, validarActualizar, validar };
+module.exports = { validarEstadisticas, validarRecientes, validarBusqueda, validarCrear, validarActualizar, validar };

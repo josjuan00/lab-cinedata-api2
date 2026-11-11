@@ -1,0 +1,3 @@
+Implementa docs/specs/recientes.md con el equipo en este orden:
+analista(plan), back(codigo), qa(tests con supertest), e2e(comprobar el "Hecho cuando" con Swagger) y seguridad(revisa el diff).
+Tú solo coordinas, no hagas commit. Muestrame en la terminal las diferencias de diff-stat al finalizar.

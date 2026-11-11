@@ -1,6 +1,6 @@
 const express = require("express");
 const { listar, top, recientes, estadisticas, buscar, obtener, resenas, crear, actualizar, eliminar, crearResena } = require("../controller/pelicula.controller.js");
-const { validarEstadisticas, validarBusqueda, validarCrear, validarActualizar, validar } = require("../validators/pelicula.validator.js");
+const { validarEstadisticas, validarRecientes, validarBusqueda, validarCrear, validarActualizar, validar } = require("../validators/pelicula.validator.js");
 const validarId = require("../middlewares/validarId.js");
 const autenticar = require("../middlewares/autenticar.js");
 const autorizar = require("../middlewares/autorizar.js");
@@ -39,7 +39,17 @@ router.get("/top", top);
  * /peliculas/recientes:
  *   get:
  *     tags: [Películas]
- *     summary: Las 10 últimas películas añadidas, de la más nueva a la más antigua
+ *     summary: 5 últimas películas añadidas
+ *     parameters:
+ *       - name: limite
+ *         in: query
+ *         required: false
+ *         description: Número de películas a devolver
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 5
+ *           default: 5
  *     responses:
  *       200:
  *         description: Lista de películas en resumen (array vacío si no hay ninguna)
@@ -49,8 +59,14 @@ router.get("/top", top);
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/PeliculasResumen'
+ *       400:
+ *         description: Parámetro limite no válido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorValidacion'
  */
-router.get("/recientes", recientes);
+router.get("/recientes", validarRecientes, validar, recientes);
 
 /**
  * @openapi

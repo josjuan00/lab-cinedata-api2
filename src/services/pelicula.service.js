@@ -31,8 +31,8 @@ async function mejores(n = 3) {
 }
 
 // RECIENTES: las n últimas añadidas (el _id lleva la fecha de creación)
-async function recientes(n = 10) {
-    return Pelicula.find().sort({ _id: -1 }).limit(n);
+async function recientes(n = 5) {
+    return Pelicula.find().sort({ _id: -1, nota: -1 }).limit(n);
 }
 
 async function buscarPorId(id) {
